@@ -1,8 +1,12 @@
-const React = require('react'),
-	$ = require('jquery'),
-	User = require('./user'),
+const
+React = require('react'),
+superagent = require('superagent'),
+superagentJsonApify = require('superagent-jsonapify'),
+User = require('./user');
 
-Users = React.createClass({
+superagentJsonApify(superagent);
+
+const Users = React.createClass({
 	getInitialState(){
 		return {
 			users: [
@@ -12,9 +16,10 @@ Users = React.createClass({
 		};
 	},
 	componentDidMount(){
-		$.getJSON('js/components/users.json', (data) => {
+		superagent.get('js/components/users.json')
+		.then(res => {
 			this.setState({
-				users: this.state.users.concat(data)
+				users: this.state.users.concat(res.body)
 			});
 		});
 	},
