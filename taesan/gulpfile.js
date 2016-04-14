@@ -1,49 +1,20 @@
-const 
-	gulp        = require('gulp'),
-	gutil       = require('gulp-util'),
-	react       = require('gulp-react'),
-	clean       = require('gulp-clean'),
-	webpack     = require('webpack-stream'),
-	browserSync = require('browser-sync'),
-	runSequence = require('run-sequence');
+// config
+const
+    BASE_DIR = './src/main/webapp/WEB-INF/',
+    APP_DIR = BASE_DIR+'resources/',
+    JS_DIR = APP_DIR + 'js/',
+    COMPILE_DIR = JS_DIR + 'compile/'
+    COMPONENT_DIR = JS_DIR + 'component/',
+    BUNDLE_DIR = JS_DIR + 'bundle/',
+    config = {
+        BASE_DIR: BASE_DIR,
+        APP_DIR: APP_DIR,
+        JS_DIR : JS_DIR,
+        COMPILE_DIR : COMPILE_DIR,
+        COMPONENT_DIR : COMPONENT_DIR,
+        BUNDLE_DIR : BUNDLE_DIR,
+        HOST: 'local.coupang.com',
+        TOMCAT_PORT: '8080'
+    };
 
-gulp
-.task('jsClean', () =>
-    gulp.src('app/**/*.js', {read: false})
-    .pipe(clean())
-)
-.task('reactify', () => 
-    gulp.src('app/**/*.jsx')
-    .pipe(react())
-    .pipe(gulp.dest('app'))
-)
-.task('packJs', () => 
-    gulp.src('app/js/index.js')
-    .pipe(webpack(
-		require('./webpack.config.js'),
-		null,
-		(err, stats) => {
-			console.log(err, stats);
-		}
-    ))
-    .pipe(gulp.dest('app/js/'))
-)
-.task('browserSync', ()=> {
-	browserSync({
-		server: {
-			baseDir: 'app',
-			routes: {
-				"/node_modules": "node_modules"
-			}
-		}
-	});
-})
-.task('watch', () => {
-	gulp.watch('app/**/*.html', browserSync.reload);
-	gulp.watch('app/js/**/*.jsx', ()=>{ runSequence('reactify')});
-	gulp.watch('app/js/index.js', ()=>{ runSequence('packJs')});
-	gulp.watch('app/js/bundle.js', browserSync.reload);
-})
-.task('default', (callback) => {
-	runSequence('jsClean', 'reactify', 'packJs', ['browserSync', 'watch'], callback);
-});
+require('./gulp/service')(config);
