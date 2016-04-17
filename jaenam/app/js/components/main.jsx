@@ -3,6 +3,9 @@ React = require('react'),
 Counter = require('./counter'),
 Avatar = require('./avatar'),
 Users = require('./users'),
+Todos = require('./todos'),
+Test = require('./test'),
+FindChildren = require('./findChildren'),
 
 user = {
 	id: 10,
@@ -17,7 +20,8 @@ Main = React.createClass({
 	render(){
 		return (
 		    <div>
-			    <Users />
+		        <FindChildren><span>xxx</span><p>yyy</p></FindChildren>
+		        <FindChildren>zzzz</FindChildren>
 		    </div>
 		);
 	}

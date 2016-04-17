@@ -22,6 +22,7 @@
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "superagent": "^1.8.3",
-    "superagent-jsonapify": "^1.4.1"
+    "superagent-jsonapify": "^1.4.1",
+    "unique-id-mixin": "^1.0.0"
   }
 }

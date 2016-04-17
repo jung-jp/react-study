@@ -1,16 +1,16 @@
 const React = require('react');
 const Counter = React.createClass({
+	propTypes: {
+		initialCount: React.PropTypes.number
+	},
+	getDefaultProps(){
+		return { initialCount: 0 };
+	},
 	getInitialState(){
-		return {
-			count: 0,
-			count2: 0
-		};
+		return { count: this.props.count };
 	},
 	onClick(){
-		this.setState({
-			count: this.state.count + 1,
-			count2: this.state.count + 2
-		});
+		this.setState({ count: this.state.count + 1 });
 	},
 	render(){
 		return(
